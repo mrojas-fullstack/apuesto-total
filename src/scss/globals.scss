@@ -52,6 +52,10 @@ button{
         border-radius: 8px;
         opacity: 0.8;
     }
+    .button-disabled{
+        color: white;
+        opacity: 0.5;
+    }
 }
 
 .cart-item{

@@ -17,7 +17,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 300,
   bgcolor: 'rgb(88, 24, 69)',
   borderRadius: '15px',
   border: '2px solid #000',
@@ -73,7 +73,10 @@ const Cart = ({ cartItems, setCartItems, addToCart, removeFromCart, setCartOpen 
         />
       ))}
       <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
-      <Button onClick={handleOpen} disabled = {cartItems.length === 0 ? true : false}>Confirmar compra</Button>
+      <Button 
+        className={cartItems.length === 0 ? 'button-disabled' : ''}
+        onClick={handleOpen} 
+        disabled = {cartItems.length === 0 ? true : false}>Confirmar compra</Button>
     </div>
     <Modal
       open={open}
@@ -81,7 +84,7 @@ const Cart = ({ cartItems, setCartItems, addToCart, removeFromCart, setCartOpen 
       aria-labelledby="child-modal-title"
       aria-describedby="child-modal-description"
     >
-      <Box sx={{ ...style, width: 400 }}>
+      <Box sx={{ ...style, width: 300 }}>
         <h2 id="child-modal-title" style={{display: 'flex', color:'yellow', justifyContent: 'center'}}>&#x2705; ¡Felicitaciones! &#x2705;</h2>
         <p id="child-modal-description">
           La compra se realizo con exito. ¡Gracias por su compra!, vuelva pronto.
