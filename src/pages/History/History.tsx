@@ -54,20 +54,23 @@ function History() {
       for(let x = 0; x < Number(count); x++){
         let local_row = JSON.parse(localStorage.getItem((`compra-${x+1}`)) as string);
         let local_total = JSON.parse(localStorage.getItem((`total-${x+1}`)) as string);
-        product.push(Array(local_row.length).fill(local_row).map((item, index) => item[index].product));
-        price.push(Array(local_row.length).fill(local_row).map((item, index) => item[index].price));
-        amount.push(Array(local_row.length).fill(local_row).map((item, index) => item[index].amount));
-        history_data[x] = local_row.map((item:Object, index: number) =>  Object.assign(item, {key: index + 1}) );
+        
+        if(local_row != null) {
+          product.push(Array(local_row.length).fill(local_row).map((item, index) => item[index].product));
+          price.push(Array(local_row.length).fill(local_row).map((item, index) => item[index].price));
+          amount.push(Array(local_row.length).fill(local_row).map((item, index) => item[index].amount));
+          history_data[x] = local_row.map((item:Object, index: number) =>  Object.assign(item, {key: index + 1}) );
 
-        rows[x] = createData(
-          (x+1).toString(), 
-          product[x].join(', '), 
-          price[x].join(', '), 
-          amount[x].join(', '), 
-          local_total.total, 
-          local_total.date,
-          history_data[x]
-        );
+          rows[x] = createData(
+            (x+1).toString(), 
+            product[x]?.join(', '), 
+            price[x]?.join(', '), 
+            amount[x]?.join(', '), 
+            local_total.total, 
+            local_total.date,
+            history_data[x]
+          );
+        }
       }
     }
   },[]);

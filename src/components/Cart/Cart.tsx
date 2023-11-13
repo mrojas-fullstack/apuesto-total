@@ -52,7 +52,6 @@ const Cart = ({ cartItems, setCartItems, addToCart, removeFromCart, setCartOpen 
       }
       historial.push(data);
     });
-    //historial.push({total: calculateTotal(cartItems).toFixed(2), date: date});
     localStorage.setItem((`total-${count}`), JSON.stringify({total: calculateTotal(cartItems).toFixed(2), date: date}));
     localStorage.setItem((`compra-${count}`), JSON.stringify(historial));
     setOpen(false);
@@ -74,7 +73,7 @@ const Cart = ({ cartItems, setCartItems, addToCart, removeFromCart, setCartOpen 
         />
       ))}
       <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
-      <Button onClick={handleOpen}>Confirmar compra</Button>
+      <Button onClick={handleOpen} disabled = {cartItems.length === 0 ? true : false}>Confirmar compra</Button>
     </div>
     <Modal
       open={open}
@@ -82,10 +81,10 @@ const Cart = ({ cartItems, setCartItems, addToCart, removeFromCart, setCartOpen 
       aria-labelledby="child-modal-title"
       aria-describedby="child-modal-description"
     >
-      <Box sx={{ ...style, width: 200 }}>
-        <h2 id="child-modal-title">¡Felicitaciones, compra exitosa!</h2>
+      <Box sx={{ ...style, width: 400 }}>
+        <h2 id="child-modal-title" style={{display: 'flex', color:'yellow', justifyContent: 'center'}}>&#x2705; ¡Felicitaciones! &#x2705;</h2>
         <p id="child-modal-description">
-          ¡Gracias por su compra!, vuelva pronto.
+          La compra se realizo con exito. ¡Gracias por su compra!, vuelva pronto.
         </p>
         <Button onClick={handleClose}>Cerrar</Button>
       </Box>

@@ -23,8 +23,6 @@ const FilterCategory = ({ category, setCategory }: Props) => {
         window.location.replace('/');
     };
 
-    console.log('category: ', category);
-
     return (
         <div className='filter-container'>
             <FormControl sx={{ m: 1, minWidth: 120, color:'white' }} size="small">

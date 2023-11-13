@@ -16,6 +16,7 @@ import { CartItemType } from "../../interfaces/cartitem.interface";
 import { products } from '../../services/api';
 import { Link } from 'react-router-dom';
 import FilterCategory from '../../components/FilterCategory/FilterCategory';
+import useScreenSize from '../../hooks/useScreenSize';
 
 import "./home.scss";
 
@@ -28,6 +29,7 @@ function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [category, setCategory] = useState('');
+  const screenSize = useScreenSize();
 
   let pagina = [...Array(5)].map((_, indx:number) => (indx + 1) + (page-1)*5).toString();
 
@@ -37,7 +39,7 @@ function Home() {
       products
         .getByCategory({ species: category })
         .then((r:any) => {
-          let por_pagina = [...Array(5)].map((_, indx:number) => r.data.results[indx + (page-1)*5]) as any;
+          let por_pagina = [...Array(5)].map((_, indx:number) => r.data.results[indx + (page-1)*5]).filter(item => item != undefined) as any;
           setAllProducts(por_pagina);
           setAllPages(Math.round(r.data.results.length/5));
           setTimeout(() => setLoading(false), 500);
@@ -119,7 +121,7 @@ function Home() {
         </Drawer>
 
         <div className='icons-home'>
-          <div className='filer-category' style={{right:'100px'}}>
+          <div className='filer-category' style={{right:'100px'}} onClick={()=>setPage(1)}>
             <FilterCategory category={category} setCategory={setCategory}/>
           </div>
 
@@ -138,16 +140,36 @@ function Home() {
           </div>
         </div>
 
-        <Grid container spacing={2}>
+        <Grid 
+          container 
+          spacing={2}
+          direction="row"
+          justifyContent= "space-around"
+        >
           {allProducts?.map((item: any) => (
-            <Grid item key={item.id} xs={12} md={3} sm={6}>
+            <Grid 
+              item 
+              key={item.id} 
+              xs={12} 
+              md={3} 
+              sm={6}
+              justifyContent="center"
+              alignItems="center"
+            >
               <Item item={item} handleAddToCart={handleAddToCart} />
             </Grid>
           ))}
         </Grid>
         <br/>
         <Stack spacing={2} sx={{display:'flex', alignItems:'center', padding: '30px 0 60px 0'}}>
-          <Pagination count={allPages} page={page} color="primary" onChange={handleChange} sx={{color:'white'}}/>
+          <Pagination 
+            count={allPages} 
+            page={page} 
+            color="primary" 
+            onChange={handleChange}
+            sx={{color:'white'}} 
+            size="small" 
+            siblingCount={screenSize.width < 400 ? -1 : 1}/>
         </Stack>
       </div>
     </div>
